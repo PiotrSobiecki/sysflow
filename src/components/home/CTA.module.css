@@ -1,0 +1,248 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section {
+  background: var(--text-dark);
+  color: white;
+  text-align: left;
+}
+
+.title {
+  color: white;
+  font-size: 3rem;
+  font-weight: 300;
+  max-width: 100% !important;
+  width: 100%;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-green), transparent);
+}
+
+.description {
+  max-width: 100% !important;
+  width: 100%;
+  margin: 0 0 4rem;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  opacity: 0.9;
+  font-weight: 300;
+  position: relative;
+}
+
+.steps {
+  background: rgba(73, 196, 60, 0.05);
+  padding: 3rem 2.5rem;
+  border-radius: 0;
+  border-left: 3px solid var(--accent-green);
+  max-width: 100% !important;
+  width: 100%;
+  margin: 0 0 4rem;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(73, 196, 60, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+
+.steps.visible {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.steps.visible::before {
+  animation: slideIn 1.2s ease-out 0.3s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.steps h3 {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+.stepsList {
+  text-align: left;
+  list-style: none;
+  font-size: 1.15rem;
+  line-height: 2;
+  padding-left: 0;
+}
+
+.stepsList li {
+  margin-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  position: relative;
+  font-weight: 300;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.stepsList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 12px;
+  height: 2px;
+  background: var(--accent-green);
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.stepsList li:hover {
+  transform: translateX(5px);
+  color: var(--accent-green);
+}
+
+.stepsList li:hover::before {
+  width: 20px;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px rgba(73, 196, 60, 0.6);
+}
+
+.stepsList strong {
+  font-weight: 400;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.stepsList li:hover strong {
+  color: var(--accent-green);
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.primary,
+.secondary {
+  padding: 1.3rem 3.2rem;
+  font-size: 0.95rem;
+  border-radius: 0;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: white;
+  z-index: 1;
+}
+
+.primary::before,
+.secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: -1;
+}
+
+.primary::after,
+.secondary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--accent-green);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: -1;
+}
+
+.primary {
+  background: rgba(73, 196, 60, 0.1);
+  border-color: var(--accent-green);
+}
+
+.primary:hover {
+  color: var(--text-dark);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 30px rgba(73, 196, 60, 0.4),
+              0 0 60px rgba(73, 196, 60, 0.2);
+  transform: translateY(-2px);
+}
+
+.primary:hover::before {
+  transform: scaleX(1);
+}
+
+.primary:hover::after {
+  opacity: 1;
+}
+
+.secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.secondary:hover {
+  color: var(--text-dark);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 30px rgba(73, 196, 60, 0.4),
+              0 0 60px rgba(73, 196, 60, 0.2);
+  transform: translateY(-2px);
+}
+
+.secondary:hover::before {
+  transform: scaleX(1);
+}
+
+.secondary:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+  }
+}
+

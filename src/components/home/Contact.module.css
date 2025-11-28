@@ -1,0 +1,41 @@
+.section {
+  background: transparent;
+  padding: 8rem 0 4rem;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 100%;
+}
+
+.contactLink {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 300;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.contactLink:hover {
+  color: var(--accent-green);
+  transform: translateX(5px);
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .contactLink {
+    font-size: 1.1rem;
+  }
+}
