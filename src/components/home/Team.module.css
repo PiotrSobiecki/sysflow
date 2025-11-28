@@ -147,4 +147,31 @@
   .teamGrid {
     grid-template-columns: 1fr;
   }
+
+  .teamMember {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .teamMember.visible {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .teamMember.visible:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .teamMember.visible:hover .memberImage {
+    transform: scale(1);
+  }
+
+  .teamMember.visible:hover h3 {
+    color: #ffffff;
+  }
+
+  .teamMember.visible:hover .memberRole {
+    color: rgba(255, 255, 255, 0.8);
+  }
 }

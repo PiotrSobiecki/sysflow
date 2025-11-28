@@ -6,11 +6,15 @@ import styles from "./WhyChoose.module.css";
 export const WhyChoose: React.FC = () => {
   const cardRefs = React.useRef<(HTMLElement | null)[]>([]);
   const [visibleCards, setVisibleCards] = React.useState<boolean[]>([]);
+  const [activeCardIndex, setActiveCardIndex] = React.useState<number | null>(
+    null
+  );
   const { ref: philosophyRef, isVisible: philosophyVisible } =
     useRevealOnIntersect();
 
   React.useEffect(() => {
     const observers: IntersectionObserver[] = [];
+    const isMobile = window.innerWidth <= 768;
 
     cardRefs.current.forEach((card, index) => {
       if (!card) return;
@@ -18,17 +22,26 @@ export const WhyChoose: React.FC = () => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setVisibleCards((prev) => {
-              const newState = [...prev];
+            if (isMobile) {
+              // Na mobile: tylko ostatnia widoczna karta ma efekty hover
+              setActiveCardIndex(index);
+            }
+            // Wszystkie karty pozostają widoczne
+            setVisibleCards((prevState) => {
+              const newState = [...prevState];
               newState[index] = true;
               return newState;
             });
-            observer.unobserve(card);
+          } else if (isMobile) {
+            // Na mobile: gdy karta opuszcza viewport, dezaktywuj efekty hover
+            setActiveCardIndex((prevIndex) =>
+              prevIndex === index ? null : prevIndex
+            );
           }
         },
         {
-          threshold: 0.2,
-          rootMargin: "0px 0px -50px 0px",
+          threshold: 0.3,
+          rootMargin: "0px 0px -30% 0px",
         }
       );
 
@@ -54,7 +67,7 @@ export const WhyChoose: React.FC = () => {
               }}
               className={`${styles.card} ${
                 visibleCards[index] ? styles.visible : ""
-              }`}
+              } ${activeCardIndex === index ? styles.active : ""}`}
               style={
                 {
                   "--card-index": index,

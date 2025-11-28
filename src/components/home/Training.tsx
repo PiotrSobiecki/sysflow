@@ -181,16 +181,56 @@ const AgendaCard: React.FC<AgendaCardProps> = ({ item, index, isVisible }) => {
     rotateY: 0,
   });
   const [gridTransform, setGridTransform] = useState({
-    x: 50,
-    y: 50,
+    x: 80,
+    y: 80,
     scale: 1,
     radius: 80,
   });
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const element = itemRef.current;
     if (!element) return;
 
+    const isMobile = window.innerWidth <= 768;
+
+    // Na mobile: użyj IntersectionObserver do aktywacji animacji
+    if (isMobile) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsActive(true);
+            // Uruchom animacje hover automatycznie
+            setGridTransform({
+              x: 80,
+              y: 80,
+              scale: 1.5,
+              radius: 80,
+            });
+          } else {
+            setIsActive(false);
+            setGridTransform({
+              x: 80,
+              y: 80,
+              scale: 1,
+              radius: 80,
+            });
+          }
+        },
+        {
+          threshold: 0.5,
+          rootMargin: "0px 0px -20% 0px",
+        }
+      );
+
+      observer.observe(element);
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+
+    // Na desktopie: użyj hover
     const handleMouseMove = (e: MouseEvent) => {
       const rect = element.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -227,7 +267,7 @@ const AgendaCard: React.FC<AgendaCardProps> = ({ item, index, isVisible }) => {
 
     const handleMouseLeave = () => {
       setTransform({ x: 0, y: 0, rotateX: 0, rotateY: 0 });
-      setGridTransform({ x: 50, y: 50, scale: 1, radius: 80 });
+      setGridTransform({ x: 75, y: 75, scale: 1, radius: 80 });
     };
 
     element.addEventListener("mousemove", handleMouseMove);
@@ -242,7 +282,9 @@ const AgendaCard: React.FC<AgendaCardProps> = ({ item, index, isVisible }) => {
   return (
     <div
       ref={itemRef}
-      className={`${styles.agendaItem} ${isVisible ? styles.visible : ""}`}
+      className={`${styles.agendaItem} ${isVisible ? styles.visible : ""} ${
+        isActive ? styles.active : ""
+      }`}
       style={{
         animationDelay: `${index * 0.05}s`,
         transform: `perspective(1000px) translateX(${transform.x}px) translateY(${transform.y}px) rotateX(${transform.rotateX}deg) rotateY(${transform.rotateY}deg) translateZ(0)`,
