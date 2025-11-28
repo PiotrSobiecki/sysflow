@@ -18,13 +18,13 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Michał Kurdziel",
     role: "CEO & Founder",
     initials: "MK",
-    image: "/image/kurdziel.jpg",
+    image: `${import.meta.env.BASE_URL}image/kurdziel.jpg`,
   },
   {
     name: "Ricardo Ribeiro",
     role: "Automation Manager",
     initials: "RR",
-    image: "/image/ribeiro.jpg",
+    image: `${import.meta.env.BASE_URL}image/ribeiro.jpg`,
   },
 ];
 

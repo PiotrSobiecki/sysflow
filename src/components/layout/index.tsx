@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ className = "" }) => {
             className={styles.brand}
           >
             <img
-              src="/image/logo.png"
+              src={`${import.meta.env.BASE_URL}image/logo.png`}
               alt="SysFlow logo"
               className={styles.brandMark}
             />
@@ -108,7 +108,7 @@ export const Footer: React.FC = () => {
           <div className={styles.footerLeft}>
             <div className={styles.footerLogo}>
               <img
-                src="/image/logo.png"
+                src={`${import.meta.env.BASE_URL}image/logo.png`}
                 alt="SysFlow logo"
                 className={styles.logoImage}
               />

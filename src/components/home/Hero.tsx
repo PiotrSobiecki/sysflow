@@ -34,7 +34,7 @@ export const Hero: React.FC = () => {
             })`,
           }}
         >
-          <source src="/video/hero.mp4" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}video/hero.mp4`} type="video/mp4" />
         </video>
         <div
           className={styles.heroOverlay}
