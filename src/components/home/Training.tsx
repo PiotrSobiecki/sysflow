@@ -7,7 +7,7 @@ export const Training: React.FC = () => {
   const { ref, isVisible } = useRevealOnIntersect();
   const [animatedPrice, setAnimatedPrice] = useState(0);
   const priceBoxRef = useRef<HTMLDivElement>(null);
-  const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const animationTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const priceBox = priceBoxRef.current;
@@ -29,7 +29,7 @@ export const Training: React.FC = () => {
           const duration = 2000;
           const decrement = (30000 - end) / (duration / 16);
 
-          animationTimerRef.current = setInterval(() => {
+          animationTimerRef.current = window.setInterval(() => {
             start -= decrement;
             if (start <= end) {
               setAnimatedPrice(end);
