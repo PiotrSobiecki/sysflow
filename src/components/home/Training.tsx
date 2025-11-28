@@ -74,7 +74,10 @@ export const Training: React.FC = () => {
     >
       <div className={styles.videoBackground}>
         <video autoPlay loop muted playsInline className={styles.video}>
-          <source src={`${import.meta.env.BASE_URL}video/video1.mp4`} type="video/mp4" />
+          <source
+            src={`${import.meta.env.BASE_URL}video/video1.mp4`}
+            type="video/mp4"
+          />
         </video>
         <div className={styles.videoOverlay}></div>
       </div>
