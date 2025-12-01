@@ -5,11 +5,18 @@ import styles from "./Training.module.css";
 
 export const Training: React.FC = () => {
   const { ref, isVisible } = useRevealOnIntersect();
+  const [forceVisible, setForceVisible] = useState(false);
   const [animatedPrice, setAnimatedPrice] = useState(0);
   const priceBoxRef = useRef<HTMLDivElement>(null);
   const animationTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Na mobile pokaż sekcję od razu, nawet jeśli IntersectionObserver
+    // z jakiegoś powodu nie zadziała (problem na części iPhone / Android)
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      setForceVisible(true);
+    }
+
     const priceBox = priceBoxRef.current;
     if (!priceBox) return;
 
@@ -66,6 +73,8 @@ export const Training: React.FC = () => {
     };
   }, []);
 
+  const sectionVisible = isVisible || forceVisible;
+
   return (
     <section
       id="szkolenie"
@@ -98,14 +107,14 @@ export const Training: React.FC = () => {
           implementacyjnymi. Celem jest znaczący efekt po każdym spotkaniu.
         </p>
 
-        <div className={styles.features}>
+          <div className={styles.features}>
           <h3>Co wyróżnia nasze szkolenie?</h3>
           <div className={styles.featuresGrid}>
             {TRAINING_FEATURES.map((feature, index) => (
               <div
                 key={index}
                 className={`${styles.feature} ${
-                  isVisible ? styles.visible : ""
+                  sectionVisible ? styles.visible : ""
                 }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -125,7 +134,9 @@ export const Training: React.FC = () => {
 
         <div
           ref={priceBoxRef}
-          className={`${styles.priceBox} ${isVisible ? styles.visible : ""}`}
+          className={`${styles.priceBox} ${
+            sectionVisible ? styles.visible : ""
+          }`}
         >
           <h3>Koszt</h3>
           <div className={styles.price}>
@@ -157,7 +168,7 @@ export const Training: React.FC = () => {
               key={item.number}
               item={item}
               index={index}
-              isVisible={isVisible}
+              isVisible={sectionVisible}
             />
           ))}
         </div>
